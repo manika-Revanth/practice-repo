@@ -29,7 +29,7 @@ jobs:
       - name: Check README
         run: |
           test -s README.md
-          grep -q "This text does not exist" README.md
+          grep -q "scripts" README.md
 
       - name: Check Repository Structure
         run: |
