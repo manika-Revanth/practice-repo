@@ -13,3 +13,4 @@ SAMPLE APPLICATION
  ⌊scripts
    ⌊check-status.sh
  ⌊html files
+   ⌊index.html
