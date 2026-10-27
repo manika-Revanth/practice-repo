@@ -1,0 +1,41 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - feature-development
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate Repository
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Display Git Information
+        run: |
+          echo "Branch: $GITHUB_REF_NAME"
+          echo "Commit: $GITHUB_SHA"
+
+      - name: Check README
+        run: |
+          test -s README.md
+          grep -q "This text does not exist" README.md
+
+      - name: Check Repository Structure
+        run: |
+          test -d .github/workflows
+          echo "Workflow directory exists"
+          ls -la
+
+      - name: Pipeline Summary
+        run: echo "CI pipeline completed successfully!"
