@@ -1,0 +1,45 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - feature-development
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate Repository
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Display Git Information
+        run: |
+          echo "Branch: $GITHUB_REF_NAME"
+          echo "Commit: $GITHUB_SHA"
+
+      - name: Check README
+        run: |
+          if [ -s README.md ]; then
+            echo "README.md exists and is not empty"
+          else
+            echo "README.md is missing or empty"
+            exit 1
+          fi
+
+      - name: Check Repository Structure
+        run: |
+          test -d .github/workflows
+          echo "Workflow directory exists"
+          ls -la
+
+      - name: Pipeline Summary
+        run: echo "CI pipeline completed successfully!"
